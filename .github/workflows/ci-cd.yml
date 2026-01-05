@@ -59,29 +59,3 @@ jobs:
       run: |
         echo "🎉🎉🎉 PIPELINE SUCCESSFUL! 🎉🎉🎉"
         echo "✅ Image built and pushed to Docker Hub!"
-
-
-- name: Run tests
-  run: |
-    echo "Installing test dependencies..."
-    pip install pytest
-    echo "Running tests..."
-    # Add your test command here
-
-
-- name: Send Slack notification
-  if: success()
-  uses: 8398a7/action-slack@v3
-  with:
-    status: ${{ job.status }}
-    channel: '#devops'
-
-
-- name: Scan with Trivy
-  uses: aquasecurity/trivy-action@master
-  with:
-    image-ref: ${{ secrets.DOCKER_USERNAME }}/my-app:latest
-    format: 'sarif'
-    output: 'trivy-results.sarif'
-
-
